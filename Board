@@ -1,0 +1,88 @@
+package com.dnk.Logic;
+
+public class Board {
+    private Piece board [][] = new Piece [3][3];                                 // Board (3x3)
+    private String winner;
+            
+    public Board() {}                                                           // Constructor
+    
+    public boolean placePieceOnBoard(Piece piece){                                 // Method to add a piece to the board
+        if (board[piece.getxPosition()][piece.getyPosition()] == null){             // Check for previous piece in the same place
+            board[piece.getxPosition()][piece.getyPosition()] = piece;
+            return true;}
+        else{
+            return false;}
+    }
+    
+    public boolean winCheck(){                                                  // Method to check for possible win
+        for(int i=0;i<3;i++){                                                       //Horizontals-Check
+            if(board[i][0] != null &&
+               board[i][1] != null &&
+               board[i][2] != null &&
+               board[i][0].isPlayer() == board[i][1].isPlayer() && 
+               board[i][0].isPlayer() == board[i][2].isPlayer()){
+               winner = board[i][0].isPlayer() ? "Team \"X\"":"Team \"O\"";
+               return true;}
+        }
+        for(int f=0;f<3;f++){                                                       //Verticals-Check
+            if(board[0][f] != null &&
+               board[1][f] != null &&
+               board[2][f] != null &&
+               board[0][f].isPlayer() == board[1][f].isPlayer() && 
+               board[0][f].isPlayer() == board[2][f].isPlayer()){
+               winner = board[0][f].isPlayer() ? "Team \"X\"":"Team \"O\"";
+               return true;}
+        }
+        if(board[0][0] != null &&                                                   //Up-Left to Down-Right Diagonal check
+           board[1][1] != null &&
+           board[2][2] != null &&
+           board[0][0].isPlayer() == board[1][1].isPlayer() && 
+           board[0][0].isPlayer() == board[2][2].isPlayer()){
+           winner = board[0][0].isPlayer() ? "Team \"X\"":"Team \"O\"";
+           return true;}
+        
+        if(board[0][2] != null &&                                                   //Up-Right to Down-Left Diagonal check
+           board[1][1] != null &&
+           board[2][0] != null &&
+           board[0][2].isPlayer() == board[1][1].isPlayer() && 
+           board[0][2].isPlayer() == board[2][0].isPlayer()){
+           winner = board[1][1].isPlayer() ? "Team \"X\"":"Team \"O\"";
+           return true;}
+        
+        return false;
+    }
+    
+    public void turnSwitch(Player player1, Player player2){                     // Method to switch turns between players
+        if (player1.isTurn()){
+            player1.setTurn(false);
+            player2.setTurn(true);}
+        else{
+            player1.setTurn(true);
+            player2.setTurn(false);}
+    }
+    
+    public void resetBoard(){                                                   // Method to clear the board
+        for (int i=0;i<3;i++){
+            for(int f=0;f<3;f++){
+                board[i][f] = null;
+                winner = "";
+            }
+        }
+    }
+    
+    public boolean drawCheck(){                                                 // Method to check if there is no free positions to play
+        for (int i=0;i<3;i++){
+            for(int f=0;f<3;f++){
+                if(board[i][f] == null){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    
+    public Piece[][] getBoard() {return board;}                                 // Getter
+    public Piece getPieceAt(int x, int y) {return board[x][y];}                     // Get method for specific coordinate
+    public String getWinner() {return winner;}
+    public void setWinner(String winner) {this.winner = winner;}
+}
