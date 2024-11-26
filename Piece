@@ -1,0 +1,26 @@
+package com.dnk.Logic;
+
+
+public class Piece {
+    private String image;
+    private int xPosition;
+    private int yPosition;
+    private boolean player;
+
+    public Piece(int xPosition, int yPosition, boolean player) {                // Constructor
+        this.xPosition = xPosition;
+        this.yPosition = yPosition;
+        this.player = player;
+        if(player){this.image = "/x.png";}else{this.image = "/circle.png";}         // Image depends on whether its Player1 or Player2
+    }
+    
+    public String getImage() {return image;}                                    // Getters ans Setters
+    public void setImage(String image) {this.image = image;}
+    public int getxPosition() {return xPosition;}
+    public void setxPosition(int xPosition) {this.xPosition = xPosition;}
+    public int getyPosition() {return yPosition;}
+    public void setyPosition(int yPosition) {this.yPosition = yPosition;}
+    public boolean isPlayer() {return player;}
+    public void setPlayer(boolean xPlayer) {this.player = xPlayer;}
+
+}
